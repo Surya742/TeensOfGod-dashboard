@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import QRCode from 'qrcode';
+import { useReactToPrint, ReactToPrint } from 'react-to-print';
+// import ReactToPrint from "react-to-print";
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -14,6 +17,7 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
+import { ComponentToPrint } from './ComponentToPrint';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +48,22 @@ DashboardSidebar.propTypes = {
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+  });
+
+  const [qrURL, setQrURL] = useState("");
+
+  QRCode.toDataURL('Teens of God!')
+    .then(url => {
+      console.log(url)
+      setQrURL(url)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
@@ -61,7 +81,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       }}
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex' }}>
-        <Logo />
+        {/* <a href="http://localhost:3000/">Home</a> */}
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -85,27 +105,36 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
+        <Stack alignItems="center" spacing={1} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
           <Box
             component="img"
-            src="/static/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
+            src={qrURL}
+            sx={{ width: 500, position: 'absolute', top: -200 }}
           />
 
           <Box sx={{ textAlign: 'center' }}>
             <Typography gutterBottom variant="h6">
-              Get more?
+              Attendence
             </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              From only $69
-            </Typography>
-          </Box>
 
-          <Button href="https://material-ui.com/store/items/minimal-dashboard/" target="_blank" variant="contained">
-            Upgrade to Pro
-          </Button>
+            {/* <ReactToPrint
+              trigger={() => <Button>Print ID</Button>}
+              content={() => componentRef}
+            /> */}
+            {/* <div style={{ display: "none" }}>
+              <ComponentToPrint ref={(el) => {
+                componentRef = el
+              }} />
+            </div> */}
+
+            <ComponentToPrint ref={componentRef} QrCode={qrURL} style={{ display: 'none'}} />
+            <Button onClick={handlePrint} variant="contained">
+              Print ID
+            </Button>
+          </Box>
         </Stack>
       </Box>
+      
     </Scrollbar>
   );
 

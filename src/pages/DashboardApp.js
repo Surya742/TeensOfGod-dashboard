@@ -22,7 +22,8 @@ import {
 
 export default function DashboardApp() {
   const theme = useTheme();
-
+  const classUpdatesArrayDesc = ['Next maths class on friday', 'Homework deadline is short, submit ASAP', 'Test in next science class, come prepared', 'Submit propsals by today', 'English class postponed to next wednessday']
+  const classUpdatesArrayTitle = ['Maths updates', 'Science Updates', 'Science Updates', 'Maths Updates', 'English Updates']
   return (
     <Page title="Dashboard">
       <Container maxWidth="xl">
@@ -32,53 +33,53 @@ export default function DashboardApp() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Classes Conducted" total={150} icon={'material-symbols:workspace-premium'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Classes Attended" total={55} color="info" icon={'material-symbols:where-to-vote'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Total Students" total={546} color="warning" icon={'material-symbols:woman-2-rounded'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Total Volunteers" total={82} color="error" icon={'material-symbols:transcribe'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Website Visits"
+              title="Class Frequency"
               subheader="(+43%) than last year"
               chartLabels={[
-                '01/01/2003',
-                '02/01/2003',
-                '03/01/2003',
-                '04/01/2003',
-                '05/01/2003',
-                '06/01/2003',
-                '07/01/2003',
-                '08/01/2003',
-                '09/01/2003',
-                '10/01/2003',
-                '11/01/2003',
+                '01/01/2022',
+                '02/01/2022',
+                '03/01/2022',
+                '04/01/2022',
+                '05/01/2022',
+                '06/01/2022',
+                '07/01/2022',
+                '08/01/2022',
+                '09/01/2022',
+                '10/01/2022',
+                '11/01/2022',
               ]}
               chartData={[
                 {
-                  name: 'Team A',
+                  name: 'Maths',
                   type: 'column',
                   fill: 'solid',
                   data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
                 },
                 {
-                  name: 'Team B',
+                  name: 'Science',
                   type: 'area',
                   fill: 'gradient',
                   data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
                 },
                 {
-                  name: 'Team C',
+                  name: 'English',
                   type: 'line',
                   fill: 'solid',
                   data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
@@ -89,23 +90,21 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="Class Frequency Distribution"
               chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Maths', value: 4344 },
+                { label: 'English', value: 5435 },
+                { label: 'Science', value: 4443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
                 theme.palette.chart.blue[0],
-                theme.palette.chart.violet[0],
                 theme.palette.chart.yellow[0],
               ]}
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          {/* <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
               title="Conversion Rates"
               subheader="(+43%) than last year"
@@ -122,9 +121,9 @@ export default function DashboardApp() {
                 { label: 'United Kingdom', value: 1380 },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title="Current Subject"
               chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
@@ -135,15 +134,15 @@ export default function DashboardApp() {
               ]}
               chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
-              title="News Update"
-              list={[...Array(5)].map((_, index) => ({
+              title="Class Updates"
+              list={classUpdatesArrayTitle.map((tit, index) => ({
                 id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
-                description: faker.name.jobTitle(),
+                title: tit,
+                description: classUpdatesArrayDesc[index],
                 image: `/static/mock-images/covers/cover_${index + 1}.jpg`,
                 postedAt: faker.date.recent(),
               }))}
@@ -152,22 +151,22 @@ export default function DashboardApp() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
-              title="Order Timeline"
+              title="Syllabus Timeline"
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
                 title: [
-                  '1983, orders, $4220',
-                  '12 Invoices have been paid',
-                  'Order #37745 from September',
-                  'New order placed #XF-2356',
-                  'New order placed #XF-2346',
+                  'Completed Tense',
+                  'Completed Trignometry',
+                  'Completed Poem 2 from text book',
+                  'Completed Calculus',
+                  'Completed Reproduction',
                 ][index],
                 type: `order${index + 1}`,
                 time: faker.date.past(),
               }))}
             />
           </Grid>
-
+{/* 
           <Grid item xs={12} md={6} lg={4}>
             <AppTrafficBySite
               title="Traffic by Site"
@@ -194,17 +193,17 @@ export default function DashboardApp() {
                 },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks
-              title="Tasks"
+              title="Homework Tasks"
               list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
+                { id: '1', label: 'Solve excercise 1.4 from Maths book' },
+                { id: '2', label: 'Revise past tense' },
+                { id: '3', label: 'Study evolution theory' },
+                { id: '4', label: 'Learn all the trignometric formule' },
+                { id: '5', label: 'Read poem 2 from English text book' },
               ]}
             />
           </Grid>
